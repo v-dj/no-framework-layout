@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const main = appWindow.querySelector('main');
   const footer = appWindow.querySelector('footer');
   const resizeBtn = document.querySelector('footer .resize');
+  let  windowRect = {};
+
+  const storeRect = () => {
+    const { top, right, bottom, left, width, height } = window.getComputedStyle(appWindow);
+    windowRect = { top, right, bottom, left, width, height };
+  };
 
   const displayClock = (target) => {
     window.setInterval(() => {
@@ -14,23 +20,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const onDrag = (evt) => {
     const { left, top } = window.getComputedStyle(appWindow);
-    appWindow.style.left = parseInt(left) + evt.movementX + 'px'
-    appWindow.style.top = parseInt(top) + evt.movementY + 'px'
+    appWindow.style.left = parseInt(left) + evt.movementX + 'px';
+    appWindow.style.top = parseInt(top) + evt.movementY + 'px';
   };
 
   const onDrop = () => {
-    const dimensions = appWindow.getBoundingClientRect();
-    if(parseInt(dimensions.left) < 0) {
+    const { top, right, bottom, left, width, height } = window.getComputedStyle(appWindow);
+    if(parseInt(left) < 0) {
       appWindow.style.left = 0;
     }
-    if(parseInt(dimensions.right) > window.innerWidth) {
-      appWindow.style.left = (window.innerWidth - dimensions.width) + 'px';
+    if(parseInt(right) < 0) {
+      appWindow.style.left = (window.innerWidth - parseInt(width)) + 'px';
     }
-    if(parseInt(dimensions.top) < 0) {
+    if(parseInt(top) < 0) {
       appWindow.style.top = 0;
     }
-    if(parseInt(dimensions.bottom) > window.innerHeight) {
-      appWindow.style.top = (window.innerHeight - dimensions.height) + 'px';
+    if(parseInt(bottom) < 0) {
+      appWindow.style.top = (window.innerHeight - parseInt(height)) + 'px';
+    }
+    if(appWindow.className === 'container') {
+      storeRect();
     }
     document.removeEventListener('mousemove', onDrag);
     document.removeEventListener('mousemove', onResize);
@@ -41,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const { left, top } = window.getComputedStyle(appWindow);
     appWindow.style.width = (evt.clientX - parseInt(left)) + 'px';
     appWindow.style.height = (evt.clientY - parseInt(top)) + 'px';
+    appWindow.style.minWidth = "320px";
+    appWindow.style.minHeight = "400px";
   };
 
   const onGrab = (evt) => {
@@ -61,24 +72,32 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (evt.target.dataset.index) {
       case "1":
         appWindow.classList.remove('max-window');
-        appWindow.classList.toggle('min-window');
         if (appWindow.classList.contains('min-window')) {
-          appWindow.removeAttribute('style');
-          main.style.display = "none";
-          footer.style.display = "none";
+          appWindow.classList.remove('min-window');
+          appWindow.style.top = windowRect.top;
+          appWindow.style.left = windowRect.left;
+          appWindow.style.width = windowRect.width;
+          appWindow.style.height = windowRect.height;
         } else {
-          main.removeAttribute('style');
-          footer.removeAttribute('style');
+          appWindow.classList.add('min-window');
+          appWindow.removeAttribute('style');
         }
         break;
         
-        case "2":
-        appWindow.removeAttribute('style');
+      case "2":
         appWindow.classList.remove('min-window');
-        appWindow.classList.toggle('max-window');
-        main.style.display = "";
-        footer.style.display = "";
-        break;
+        if (appWindow.classList.contains('max-window')){
+          appWindow.classList.remove('max-window');
+          appWindow.style.top = windowRect.top;
+          appWindow.style.left = windowRect.left;
+          appWindow.style.width = windowRect.width;
+          appWindow.style.height = windowRect.height;
+        } else {
+          storeRect();
+          appWindow.classList.add('max-window');
+          appWindow.removeAttribute('style');
+        }
+      break;
     
       case "3":
         appWindow.removeAttribute('style');
@@ -99,5 +118,5 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   resizeBtn.addEventListener('mousedown', onGrab)
-
+  storeRect();
 });
