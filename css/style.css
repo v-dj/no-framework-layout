@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 * {
   box-sizing: border-box;
 }
@@ -11,28 +12,34 @@ body {
 
 .container {
   position: absolute;
-  top: calc(50% - 22.5vw);
+  top: calc(50% - 40vh);
   left: calc(50% - 40vw);
   display: flex;
   flex-direction: column;
   background-color: #2a182e;
   width: 80vw;
   max-width: 100vw;
-  height: 45vw;
+  height: 80vh;
   max-height: 100vh;
   border-radius: 0.3rem;
   overflow: hidden;
   box-shadow: 3px 6px 5px 1px rgba(0, 0, 0, 0.3);
 }
 
-.max-window {
+.max-window,
+.mobile {
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   border-radius: 0;
 }
-.max-window .resize {
+.max-window .resize,
+.mobile .resize {
+  display: none;
+}
+
+.mobile .dots {
   display: none;
 }
 
@@ -48,7 +55,7 @@ body {
 }
 
 header {
-  height: 40px;
+  flex: 0 0 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -113,12 +120,54 @@ header .dots span:last-child:hover {
 }
 
 main {
-  flex: 1 1 auto;
+  height: max-content;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "VG5000";
+  overflow-y: hidden;
+}
+main .paragraph {
+  height: 100%;
+  flex: 1 0 320px;
+  padding: 50px;
+  overflow-y: overlay;
+}
+main .paragraph p {
+  font-size: 2rem;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+main .paragraph p::first-letter {
+  font-size: 2.5em;
+  float: left;
+  margin-right: 0.1em;
+  background-color: #f9a61a;
+  border-radius: 2px;
+  color: #2a182e;
+  padding: 0 0.15em;
+  margin-top: 0.145em;
+}
+main .grid {
+  height: 100%;
+  flex: 1 0 50%;
+  padding: 50px;
+  border-left: 1px solid rgba(128, 128, 128, 0.2);
+  overflow-y: overlay;
+}
+main.column {
+  overflow-y: overlay;
+}
+main.column .paragraph {
+  height: max-content;
+}
+main.column .grid {
+  height: max-content;
+  overflow-y: unset;
 }
 
 footer {
   user-select: none;
-  height: 30px;
+  flex: 0 0 30px;
   display: flex;
   margin-top: auto;
   align-items: center;
@@ -138,6 +187,21 @@ footer .resize {
   flex: 0 0 15px;
   height: 30px;
   cursor: nwse-resize;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar-track {
+    background-color: #2a182e;
+  }
+
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.2);
+    border: 5px solid #2a182e;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

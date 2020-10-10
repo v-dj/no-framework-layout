@@ -2,10 +2,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const clock = document.querySelector('footer .time');
   const appWindow = document.querySelector('.container');
   const windowBtn = appWindow.querySelector('.dots');
-  const main = appWindow.querySelector('main');
-  const footer = appWindow.querySelector('footer');
   const resizeBtn = document.querySelector('footer .resize');
   let  windowRect = {};
+
+  const singleColumn = () => {
+    const { width } = window.getComputedStyle(appWindow);
+    if(parseInt(width) < 640) {
+      document.querySelector('main').classList.add('column');
+    } else {
+      document.querySelector('main').classList.remove('column');
+    }
+  };
+
+  const media = () => {
+    if(window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+      appWindow.removeAttribute('style');
+      appWindow.classList.add('mobile');
+    } else {
+      appWindow.classList.remove('mobile');
+    }
+  };
+
+  const setLayout = () => {
+    singleColumn();
+    media();
+  }
 
   const storeRect = () => {
     const { top, right, bottom, left, width, height } = window.getComputedStyle(appWindow);
@@ -52,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     appWindow.style.height = (evt.clientY - parseInt(top)) + 'px';
     appWindow.style.minWidth = "320px";
     appWindow.style.minHeight = "400px";
+    singleColumn();
   };
 
   const onGrab = (evt) => {
@@ -101,8 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
       case "3":
         appWindow.removeAttribute('style');
-        main.removeAttribute('style');
-        footer.removeAttribute('style');
         appWindow.style.opacity = 0;
         window.setTimeout(() => {
           appWindow.className = "container";
@@ -118,5 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   resizeBtn.addEventListener('mousedown', onGrab)
-  storeRect();
+  window.onresize = setLayout();
+  window.addEventListener('orientationchange', setLayout());
 });
