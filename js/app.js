@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const storeRect = () => {
     const { top, right, bottom, left, width, height } = window.getComputedStyle(appWindow);
-    windowRect = { top, right, bottom, left, width, height };
+    const column = document.querySelector('main').classList.contains('column');
+    windowRect = { top, right, bottom, left, width, height, column };
   };
 
   const displayClock = (target) => {
@@ -114,8 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
           appWindow.style.left = windowRect.left;
           appWindow.style.width = windowRect.width;
           appWindow.style.height = windowRect.height;
+          if(windowRect.column) {
+            document.querySelector('main').classList.add('column');
+          }
         } else {
           storeRect();
+          document.querySelector('main').classList.remove('column');
           appWindow.classList.add('max-window');
           appWindow.removeAttribute('style');
         }

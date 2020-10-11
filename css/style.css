@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 * {
   box-sizing: border-box;
+  outline: none;
 }
 
 body {
@@ -120,7 +121,7 @@ header .dots span:last-child:hover {
 }
 
 main {
-  height: max-content;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
   font-family: "VG5000";
@@ -131,6 +132,9 @@ main .paragraph {
   flex: 1 0 320px;
   padding: 50px;
   overflow-y: overlay;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 main .paragraph p {
   font-size: 2rem;
@@ -147,22 +151,70 @@ main .paragraph p::first-letter {
   padding: 0 0.15em;
   margin-top: 0.145em;
 }
+main .paragraph button {
+  background-color: #007ab3;
+  font-family: inherit;
+  text-transform: capitalize;
+  color: white;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 2rem;
+  margin-top: 2rem;
+  padding: 0.75rem;
+  cursor: pointer;
+}
+main .paragraph button:hover {
+  background-color: #009de6;
+}
 main .grid {
   height: 100%;
   flex: 1 0 50%;
   padding: 50px;
   border-left: 1px solid rgba(128, 128, 128, 0.2);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem 1.5rem;
   overflow-y: overlay;
+}
+main .grid article:last-child {
+  margin-bottom: 50px;
+}
+main .grid article svg {
+  stroke: rgba(128, 128, 128, 0.2);
+  background-color: rgba(220, 149, 193, 0.05);
+  width: 100%;
+  height: 260px;
+}
+main .grid article h2 {
+  position: relative;
+  margin: 0.5rem 0;
+  padding-right: 2rem;
+  text-transform: capitalize;
+  font-size: 1.5rem;
+}
+main .grid article h2::after {
+  content: ">>";
+  position: absolute;
+  right: 4px;
+  top: 0;
+}
+main .grid article p {
+  line-height: 1.1;
 }
 main.column {
   overflow-y: overlay;
 }
 main.column .paragraph {
   height: max-content;
+  padding: 30px;
 }
 main.column .grid {
   height: max-content;
+  padding: 30px;
   overflow-y: unset;
+}
+main.column .grid article:last-child {
+  margin-bottom: 0;
 }
 
 footer {
@@ -187,6 +239,10 @@ footer .resize {
   flex: 0 0 15px;
   height: 30px;
   cursor: nwse-resize;
+}
+
+a {
+  color: inherit;
 }
 
 @media (hover: hover) and (pointer: fine) {
