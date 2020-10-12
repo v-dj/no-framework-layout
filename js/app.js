@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         appWindow.removeAttribute('style');
         appWindow.style.opacity = 0;
         window.setTimeout(() => {
+          document.querySelector('main').classList.remove('column');
           appWindow.className = "container";
         }, 300);
         window.setTimeout(() => {
