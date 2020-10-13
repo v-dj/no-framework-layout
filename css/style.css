@@ -138,7 +138,7 @@ main .paragraph {
   height: 100%;
   flex: 1 0 320px;
   padding: 50px;
-  overflow-y: overlay;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -150,12 +150,13 @@ main .paragraph p {
 }
 main .paragraph p::first-letter {
   font-size: 2.5em;
+  line-height: 0.7;
   float: left;
   margin-right: 0.1em;
   background-color: #f9a61a;
   border-radius: 2px;
   color: #2a182e;
-  padding: 0 0.15em;
+  padding: 0.22em;
   margin-top: 0.145em;
 }
 main .paragraph button {
@@ -181,7 +182,7 @@ main .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 2rem 1.5rem;
-  overflow-y: overlay;
+  overflow-y: auto;
 }
 main .grid article:last-child {
   margin-bottom: 50px;
@@ -209,7 +210,7 @@ main .grid article p {
   line-height: 1.1;
 }
 main.column {
-  overflow-y: overlay;
+  overflow-y: auto;
 }
 main.column .paragraph {
   height: max-content;
