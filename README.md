@@ -10,4 +10,4 @@ Just a simple unplanned freestyle HTML / CSS / JS exercice...
 
 ### Demo :
 
-https://vincent-deljesus.github.io/no-framework-layout/
+https://v-dj.github.io/no-framework-layout/
